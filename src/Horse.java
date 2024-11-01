@@ -1,10 +1,10 @@
 public class Horse extends ChessPiece{
-    public Horse(String color) {
+    public Horse(Color color) {
         super(color);
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return super.getColor();
     }
 

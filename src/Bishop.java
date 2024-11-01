@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Bishop extends ChessPiece{
     public Bishop(Color color) {
         super(color);
@@ -10,39 +12,113 @@ public class Bishop extends ChessPiece{
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-
+        //define possible moves for the chess piece, the length of Array returns possible room for movement
+        ArrayList<Boolean> lPlusCPlus = new ArrayList<>();
+        ArrayList<Boolean> lPlusCMinus = new ArrayList<>();
+        ArrayList<Boolean> lMinusCPlus = new ArrayList<>();
+        ArrayList<Boolean> LMinusCMinus = new ArrayList<>();
         if(!isValidValues(line, column, toLine, toColumn)) return false;
 
         //defining some repetitive booleans
         // 1. checking if the next cell is empty
         // 2. checking if there is another color chess piece on the way
-        boolean isCellNullOrOccupiedByEnemy = (chessBoard.board[toLine][toColumn] == null)
-                || (chessBoard.board[toLine][toColumn].color != this.getColor());
 
         //Bishop moves in the diagonal
+        //filling out the arraylists with possible moves,
+        //if there is an enemy chess piece on the way - stops the  iteration
         for(int i = 1; i <= 7; i++){
-            // L+i C+i, defining where it can move
+            //1. L+i C+i, defining where it can move,checking each value if it is within the board
+            //checking if the last entry of arraylist is not false - in case of false already met, generating false
+            if(isValidValues(line, column, line + i, column + i)
+                && (isCellNull(chessBoard, line + i, column + i)
+                    || isCellOccupiedByEnemy(chessBoard, line + i, column + i))
+                && (lPlusCPlus.getLast() != false)){
+                //explicitly checking false, accepted values - null (freshly created) or true
 
-            if((line + i == toLine) && (column + i == toColumn)
-                && isCellNullOrOccupiedByEnemy){
-                return true;
-                //L+i C-i
+                lPlusCPlus.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line + i, column + i)){
+                    lPlusCPlus.add(false);
+                }
+            } else {
+                lPlusCPlus.add(false);
             }
-            if((line + i == toLine) && (column - i == toColumn)
-                && isCellNullOrOccupiedByEnemy){
-                return true;
-                //L-i C+i
+            //2. L+i C-i, defining where it can move, checking each value if it is within the board
+            if(isValidValues(line, column, line + i, column - i)
+                    && (isCellNull(chessBoard, line + i, column - i)
+                    || isCellOccupiedByEnemy(chessBoard, line + i, column - i))
+                    && (lPlusCMinus.getLast() != false)){
+
+                lPlusCMinus.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line + i, column - i)){
+                    //checking if the cell occupied by the enemy chess piece, pushing false for the cell right after it
+                    lPlusCMinus.add(false);
+                }
+            } else {
+                lPlusCMinus.add(false);
             }
-            if ((line - i == toLine) && (column + i == toColumn)
-                && isCellNullOrOccupiedByEnemy) {
-                return true;
-                //L-i C-i
+
+            //3. L-i C+i, defining where it can move, checking each value if it is within the board
+            if(isValidValues(line, column, line - i, column + i)
+                    && (isCellNull(chessBoard, line - i, column + i)
+                    || isCellOccupiedByEnemy(chessBoard, line - i, column + i))
+                    && (lMinusCPlus.getLast() != false)){
+
+                lMinusCPlus.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line - i, column + i)){
+                    lMinusCPlus.add(false);
+                }
+            } else {
+                lMinusCPlus.add(false);
             }
-            if ((line - i == toLine) && (column - i == toColumn)
-                && isCellNullOrOccupiedByEnemy) {
-                return true;
+
+            //4. L-i C-i, defining where it can move, checking each value if it is within the board
+            if(isValidValues(line, column, line - i, column - i)
+                    && (isCellNull(chessBoard, line - i, column - i)
+                    || isCellOccupiedByEnemy(chessBoard, line - i, column - i))
+                    && (LMinusCMinus.getLast() != false)){
+
+                LMinusCMinus.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line - i, column - i)){
+                    LMinusCMinus.add(false);
+                }
+            } else {
+                LMinusCMinus.add(false);
             }
         }
+        //getting rid of potential false values recorded to arraylist
+        lPlusCPlus = truncateArray(lPlusCPlus);
+        lPlusCMinus = truncateArray(lPlusCMinus);
+        lMinusCPlus = truncateArray(lMinusCPlus);
+        LMinusCMinus = truncateArray(LMinusCMinus);
+
+        //defining if it is legal move for the bishop
+        int lineDiff = toLine - line;
+        int columnDiff = toColumn - column;
+
+        if(Math.abs(lineDiff) != Math.abs(columnDiff)){
+            return false;
+        }
+
+        //case lPlusCPlus
+        if((lineDiff > 0) && (columnDiff > 0) && (lPlusCPlus.get(Math.abs(lineDiff)) != null))
+            return true;
+
+        //case LPlusCMinus
+       if((lineDiff > 0) && (columnDiff < 0) && (lPlusCMinus.get(Math.abs(lineDiff)) != null))
+           return true;
+
+        //case LMinusCPlus
+        if((lineDiff < 0) && (columnDiff > 0) && (lMinusCPlus.get(Math.abs(lineDiff)) != null))
+            return true;
+
+        //case LMinusCMinus
+        if((lineDiff < 0) && (columnDiff < 0) && (LMinusCMinus.get(Math.abs(lineDiff)) != null))
+            return true;
+
         return false;
     }
 

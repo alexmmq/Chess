@@ -1,46 +1,132 @@
+import java.util.ArrayList;
+
 public class Rook extends ChessPiece{
-    public Rook(String color) {
+
+    public Rook(Color color) {
         super(color);
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return super.getColor();
     }
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        //check if the horse is out of the chessboard
-        if(line < 0 || line >7) return false;
-        if(column < 0 || column >7) return false;
-        if(toLine < 0 || toLine >7) return false;
-        if(toColumn < 0 || toColumn >7) return false;
+        ArrayList<Boolean> lPlusCSame = new ArrayList<>();
+        ArrayList<Boolean> lSameCPlus = new ArrayList<>();
+        ArrayList<Boolean> lMinusCSame = new ArrayList<>();
+        ArrayList<Boolean> LSameCMinus = new ArrayList<>();
+        if(!isValidValues(line, column, toLine, toColumn)) return false;
 
-        //check if initial position is the same as the toPosition
-        if((line == toLine) && (column == toColumn)){
+        //Rook moves on columns and lines, iterating through all possible cells that rook can move to
+        for(int i = 1; i <= 7; i++){
+            //1. L C+i
+            //a. first check - if the valid move
+            //b. Check for null and occupied by enemy cell
+            if(isValidValues(line, column, line, column+i)
+                && (isCellNull(chessBoard, line, column+i)
+                || isCellOccupiedByEnemy(chessBoard, line, column+i))
+                && (lPlusCSame.getLast() != false)){
+
+                lSameCPlus.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line, column+i)){
+                    //checking if the cell occupied by the enemy chess piece, pushing false for the cell right after it
+                    lSameCPlus.add(false);
+                }
+            }
+            else{
+                lSameCPlus.add(false);
+            }
+
+            //2. L C-i
+            if(isValidValues(line, column, line, column-i)
+                    && (isCellNull(chessBoard, line, column-i)
+                    || isCellOccupiedByEnemy(chessBoard, line, column-i))
+                    && (LSameCMinus.getLast() != false)){
+
+
+                LSameCMinus.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line, column-i)){
+                    //checking if the cell occupied by the enemy chess piece, pushing false for the cell right after it
+                    LSameCMinus.add(false);
+                }
+            }
+            else{
+                LSameCMinus.add(false);
+            }
+
+            //3. L-i C
+            if(isValidValues(line, column, line-i, column)
+                    && (isCellNull(chessBoard, line-i, column)
+                    || isCellOccupiedByEnemy(chessBoard, line-i, column))
+                    && (lMinusCSame.getLast() != false)){
+
+
+                lMinusCSame.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line-i, column)){
+                    //checking if the cell occupied by the enemy chess piece, pushing false for the cell right after it
+                    lMinusCSame.add(false);
+                }
+            }
+            else{
+                lMinusCSame.add(false);
+            }
+
+            //4. L+i C
+            if(isValidValues(line, column, line+i, column)
+                    && (isCellNull(chessBoard, line+i, column)
+                    || isCellOccupiedByEnemy(chessBoard, line+i, column))
+                    && (lPlusCSame.getLast() != false)){
+
+
+                lPlusCSame.add(true);
+
+                if(isCellOccupiedByEnemy(chessBoard, line+i, column)){
+                    //checking if the cell occupied by the enemy chess piece, pushing false for the cell right after it
+                    lPlusCSame.add(false);
+                }
+            }
+            else{
+                lPlusCSame.add(false);
+            }
+        }
+
+        //getting rid of false values within the arrays
+        lPlusCSame = truncateArray(lPlusCSame);
+        lSameCPlus = truncateArray(lSameCPlus);
+        lMinusCSame = truncateArray(lMinusCSame);
+        LSameCMinus = truncateArray(LSameCMinus);
+
+        //defining if it is legal move for the rook, one of the diffs should be equal to 0
+        int lineDiff = toLine - line;
+        int columnDiff = toColumn - column;
+
+        if(!(lineDiff == 0) || (columnDiff == 0)){
             return false;
         }
 
-        //Rook moves on columns and lines
-        for(int i = 1; i <= 7; i++){
-            //L C+i
-            if((line==toLine) && (column+i==toColumn)){
-                return true;
-            }
-            //L C-i
-            if((line==toLine) && (column-i==toColumn)){
-                return true;
-            }
+        //case LSame CPlus
+        if((lineDiff == 0) && (columnDiff > 0) && (lSameCPlus.get(Math.abs(columnDiff)) != null)){
+            return true;
+        }
 
-            //L-i C
-            if((line-i==toLine) && (column==toColumn)){
-                return true;
-            }
+        //case LSame CMinus
+        if((lineDiff == 0) && (columnDiff < 0) && (LSameCMinus.get(Math.abs(columnDiff)) != null)){
+            return true;
+        }
 
-            //L+i C
-            if((line+i==toLine) && (column==toColumn)){
-                return true;
-            }
+        //case LPlus CSame
+        if((lineDiff > 0) && (columnDiff == 0) && (lPlusCSame.get(Math.abs(lineDiff)) != null)){
+            return true;
+        }
+
+        //case LMinus CSame
+        if((lineDiff < 0) && (columnDiff == 0) && (lMinusCSame.get(Math.abs(lineDiff)) !=null)){
+            return true;
         }
 
         return false;

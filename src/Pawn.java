@@ -1,10 +1,11 @@
 public class Pawn extends ChessPiece{
-    public Pawn(String color) {
+
+    public Pawn(Color color) {
         super(color);
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return super.getColor();
     }
 
