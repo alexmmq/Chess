@@ -26,7 +26,7 @@ public class Bishop extends ChessPiece{
         //Bishop moves in the diagonal
         //filling out the arraylists with possible moves,
         //if there is an enemy chess piece on the way - stops the  iteration
-        for(int i = 1; i <= 7; i++){
+        for(int i = 0; i <= 7; i++){
             //1. L+i C+i, defining where it can move,checking each value if it is within the board
             //checking if the last entry of arraylist is not false - in case of false already met, generating false
             if(isValidValues(line, column, line + i, column + i)
@@ -103,21 +103,30 @@ public class Bishop extends ChessPiece{
             return false;
         }
 
-        //case lPlusCPlus
-        if((lineDiff > 0) && (columnDiff > 0) && (lPlusCPlus.get(Math.abs(lineDiff)) != null))
-            return true;
 
-        //case LPlusCMinus
-       if((lineDiff > 0) && (columnDiff < 0) && (lPlusCMinus.get(Math.abs(lineDiff)) != null))
-           return true;
+        if(lPlusCPlus.size() >= Math.abs(lineDiff)){
+            //case lPlusCPlus
+            if((lineDiff > 0) && (columnDiff > 0))
+                return true;
+        }
 
-        //case LMinusCPlus
-        if((lineDiff < 0) && (columnDiff > 0) && (lMinusCPlus.get(Math.abs(lineDiff)) != null))
-            return true;
+        if(lPlusCMinus.size() >= Math.abs(lineDiff)){
+            //case LPlusCMinus
+            if((lineDiff > 0) && (columnDiff < 0))
+                return true;
+        }
 
-        //case LMinusCMinus
-        if((lineDiff < 0) && (columnDiff < 0) && (LMinusCMinus.get(Math.abs(lineDiff)) != null))
-            return true;
+        if(lMinusCPlus.size() >= Math.abs(lineDiff)){
+            //case LMinusCPlus
+            if((lineDiff < 0) && (columnDiff > 0))
+                return true;
+        }
+
+        if(LMinusCMinus.size() >= Math.abs(lineDiff)){
+            //case LMinusCMinus
+            if((lineDiff < 0) && (columnDiff < 0))
+                return true;
+        }
 
         return false;
     }

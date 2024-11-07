@@ -10,19 +10,18 @@ public class King extends ChessPiece{
 
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
-        //check if the queen is out of the chessboard
-        if(line < 0 || line >7) return false;
-        if(column < 0 || column >7) return false;
-        if(toLine < 0 || toLine >7) return false;
-        if(toColumn < 0 || toColumn >7) return false;
+        if(!isValidValues(line, column, toLine, toColumn)) return false;
 
-        //check if initial position is the same as the toPosition
-        if((line == toLine) && (column == toColumn)){
-            return false;
-        }
+        //check for valid moves of the King- it can go one cell everywhere
+        int lineDiff = Math.abs(toLine - line);
+        int columnDiff = Math.abs(toColumn - column);
+        boolean validMove = (lineDiff == 0 && columnDiff == 1)
+                || (lineDiff == 1 && columnDiff == 0)
+                || (lineDiff == 1 && columnDiff == 1);
+
 
         //King moves one cell in any direction
-        // L+1
+        // L+1 C+1
         if((line+1 == toLine)&&(column+1 == toColumn)){
             return true;
         }
@@ -53,7 +52,24 @@ public class King extends ChessPiece{
     }
 
     public boolean isUnderAttack(ChessBoard chessBoard, int line, int column) {
-        return chessBoard.board[line][column] != null;
+        //parses all the chessboard for enemy pieces that can go to the certain cell
+        for(int i = 0; i <= 7; i++){
+            for(int j = 0; j <= 7; j++){
+                if (!chessBoard.board[i][j].getColor().equals(this.getColor())) {
+                    //check for all other chess pieces
+                    if(!chessBoard.board[i][j].getSymbol().equals("P")
+                        && chessBoard.board[i][j].canMoveToPosition(chessBoard, i, j, line, column)){
+                        return true;
+                        //check if it is the pawn, has exception in eating way
+                    } else if(chessBoard.board[i][j].getSymbol().equals("P")
+                        && chessBoard.board[i][j].canMoveToPosition(chessBoard, i, j, line, column)
+                        && Math.abs(column - j) == 1){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override

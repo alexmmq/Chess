@@ -20,7 +20,7 @@ public class Rook extends ChessPiece{
         if(!isValidValues(line, column, toLine, toColumn)) return false;
 
         //Rook moves on columns and lines, iterating through all possible cells that rook can move to
-        for(int i = 1; i <= 7; i++){
+        for(int i = 0; i <= 7; i++){
             //1. L C+i
             //a. first check - if the valid move
             //b. Check for null and occupied by enemy cell
@@ -110,24 +110,33 @@ public class Rook extends ChessPiece{
         }
 
         //case LSame CPlus
-        if((lineDiff == 0) && (columnDiff > 0) && (lSameCPlus.get(Math.abs(columnDiff)) != null)){
-            return true;
+        if(lSameCPlus.size() >= Math.abs(columnDiff)){
+            if((lineDiff == 0) && (columnDiff > 0)){
+                return true;
+            }
         }
 
         //case LSame CMinus
-        if((lineDiff == 0) && (columnDiff < 0) && (LSameCMinus.get(Math.abs(columnDiff)) != null)){
-            return true;
+        if(LSameCMinus.size() >= Math.abs(columnDiff)){
+            if((lineDiff == 0) && (columnDiff < 0)){
+                return true;
+            }
         }
 
         //case LPlus CSame
-        if((lineDiff > 0) && (columnDiff == 0) && (lPlusCSame.get(Math.abs(lineDiff)) != null)){
-            return true;
+        if(lPlusCSame.size() >= Math.abs(columnDiff)){
+            if((lineDiff > 0) && (columnDiff == 0)){
+                return true;
+            }
         }
 
         //case LMinus CSame
-        if((lineDiff < 0) && (columnDiff == 0) && (lMinusCSame.get(Math.abs(lineDiff)) !=null)){
-            return true;
+        if(lMinusCSame.size() >= Math.abs(columnDiff)){
+            if((lineDiff < 0) && (columnDiff == 0)){
+                return true;
+            }
         }
+
 
         return false;
     }

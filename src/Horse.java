@@ -11,36 +11,55 @@ public class Horse extends ChessPiece{
     @Override
     public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn) {
 
-        //check if the horse is out of the chessboard
-        if(line < 0 || line >7) return false;
-        if(column < 0 || column >7) return false;
-        if(toLine < 0 || toLine >7) return false;
-        if(toColumn < 0 || toColumn >7) return false;
-        //check if initial position is the same as the toPosition
-        if((line == toLine) && (column == toColumn)){
-            return false;
-        }
-        //horse can move max to 8 cells when standing in the middle
+        if(!isValidValues(line, column, toLine, toColumn)) return false;
+
+        //horse can move max to 8 cells when standing in the middle - moving through the figures
         //case #1 offset Line +2 possible offset column -1 & 1
-        if(((line+2)==toLine)
-                && ((column+1)==toColumn)||((column-1)==toColumn)){
+        if(isValidValues(line, column, line + 2, column - 1)
+                && (isCellNull(chessBoard, line + 2, column - 1)
+                || isCellOccupiedByEnemy(chessBoard, line + 2, column - 1))){
+            return true;
+        }
+        if(isValidValues(line, column, line + 2, column + 1)
+                && (isCellNull(chessBoard, line + 2, column + 1)
+                || isCellOccupiedByEnemy(chessBoard, line + 2, column + 1))){
             return true;
         }
         //case #2 offset Line +1 possible offset column -2 & 2
-        else if(((line+1)==toLine)
-                && ((column+2)==toColumn)||((column-2)==toColumn)){
+        if(isValidValues(line, column, line + 1, column - 2)
+                && (isCellNull(chessBoard, line + 1, column - 2)
+                || isCellOccupiedByEnemy(chessBoard, line + 1, column - 2))){
             return true;
         }
+        if(isValidValues(line, column, line + 1, column + 2)
+                && (isCellNull(chessBoard, line + 1, column + 2)
+                || isCellOccupiedByEnemy(chessBoard, line + 1, column + 2))){
+            return true;
+        }
+
         //case #3 offset Line -1 possible offset column -2 & 2
-        else if(((line-1)==toLine)
-                && ((column+2)==toColumn)||((column-2)==toColumn)){
+        if(isValidValues(line, column, line - 1, column - 2)
+                && (isCellNull(chessBoard, line - 1, column - 2)
+                || isCellOccupiedByEnemy(chessBoard, line - 1, column - 2))){
+            return true;
+        }
+        if(isValidValues(line, column, line - 1, column + 2)
+                && (isCellNull(chessBoard, line - 1, column + 2)
+                || isCellOccupiedByEnemy(chessBoard, line - 1, column + 2))){
             return true;
         }
         //case #4 offset Line -2 possible offset column -1 & 1
-        else if(((line-2)==toLine)
-                && ((column+1)==toColumn)||((column-1)==toColumn)){
+        if(isValidValues(line, column, line - 2, column - 1)
+                && (isCellNull(chessBoard, line - 2, column - 1)
+                || isCellOccupiedByEnemy(chessBoard, line - 2, column - 1))){
             return true;
-        } else return false;
+        }
+        if(isValidValues(line, column, line - 2, column + 1)
+                && (isCellNull(chessBoard, line - 2, column + 1)
+                || isCellOccupiedByEnemy(chessBoard, line - 2, column + 1))){
+            return true;
+        }
+        return false;
     }
 
     @Override
