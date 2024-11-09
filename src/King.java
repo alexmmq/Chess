@@ -20,34 +20,15 @@ public class King extends ChessPiece{
                 || (lineDiff == 1 && columnDiff == 1);
 
 
-        //King moves one cell in any direction
-        // L+1 C+1
-        if((line+1 == toLine)&&(column+1 == toColumn)){
+//        King moves one cell in any direction, we should check if the cell we move to :
+//         - null;
+//         - contains an enemy chesspiece;
+//         - is not under attack;
+        if(validMove
+                && (isCellNull(chessBoard, toLine, toColumn)
+                || isCellOccupiedByEnemy(chessBoard, toLine, toColumn))
+                && !isUnderAttack(chessBoard, toLine, toColumn))
             return true;
-        }
-        if((line+1 == toLine)&&(column == toColumn)){
-            return true;
-        }
-        if((line+1 == toLine)&&(column-1 == toColumn)){
-            return true;
-        }
-        // L
-        if((line == toLine)&&(column+1 == toColumn)){
-            return true;
-        }
-        if((line==toLine)&&(column-1==toColumn)){
-            return true;
-        }
-        // L-1
-        if((line-1==toLine)&&(column+1==toColumn)){
-            return true;
-        }
-        if((line-1==toLine)&&(column==toColumn)){
-            return true;
-        }
-        if((line-1==toLine)&&(column-1==toColumn)){
-            return true;
-        }
         return false;
     }
 

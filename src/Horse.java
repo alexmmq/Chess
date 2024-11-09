@@ -13,50 +13,17 @@ public class Horse extends ChessPiece{
 
         if(!isValidValues(line, column, toLine, toColumn)) return false;
 
-        //horse can move max to 8 cells when standing in the middle - moving through the figures
-        //case #1 offset Line +2 possible offset column -1 & 1
-        if(isValidValues(line, column, line + 2, column - 1)
-                && (isCellNull(chessBoard, line + 2, column - 1)
-                || isCellOccupiedByEnemy(chessBoard, line + 2, column - 1))){
-            return true;
-        }
-        if(isValidValues(line, column, line + 2, column + 1)
-                && (isCellNull(chessBoard, line + 2, column + 1)
-                || isCellOccupiedByEnemy(chessBoard, line + 2, column + 1))){
-            return true;
-        }
-        //case #2 offset Line +1 possible offset column -2 & 2
-        if(isValidValues(line, column, line + 1, column - 2)
-                && (isCellNull(chessBoard, line + 1, column - 2)
-                || isCellOccupiedByEnemy(chessBoard, line + 1, column - 2))){
-            return true;
-        }
-        if(isValidValues(line, column, line + 1, column + 2)
-                && (isCellNull(chessBoard, line + 1, column + 2)
-                || isCellOccupiedByEnemy(chessBoard, line + 1, column + 2))){
-            return true;
-        }
+        //check for valid moves of the horse - it can go one cell forward
+        int lineDiff = Math.abs(toLine - line);
+        int columnDiff = Math.abs(toColumn - column);
+        boolean validMove = ((lineDiff == 2) && (columnDiff == 1))
+                || (lineDiff == 1 && columnDiff == 2);
 
-        //case #3 offset Line -1 possible offset column -2 & 2
-        if(isValidValues(line, column, line - 1, column - 2)
-                && (isCellNull(chessBoard, line - 1, column - 2)
-                || isCellOccupiedByEnemy(chessBoard, line - 1, column - 2))){
-            return true;
-        }
-        if(isValidValues(line, column, line - 1, column + 2)
-                && (isCellNull(chessBoard, line - 1, column + 2)
-                || isCellOccupiedByEnemy(chessBoard, line - 1, column + 2))){
-            return true;
-        }
-        //case #4 offset Line -2 possible offset column -1 & 1
-        if(isValidValues(line, column, line - 2, column - 1)
-                && (isCellNull(chessBoard, line - 2, column - 1)
-                || isCellOccupiedByEnemy(chessBoard, line - 2, column - 1))){
-            return true;
-        }
-        if(isValidValues(line, column, line - 2, column + 1)
-                && (isCellNull(chessBoard, line - 2, column + 1)
-                || isCellOccupiedByEnemy(chessBoard, line - 2, column + 1))){
+        //horse can move max to 8 cells when standing in the middle - can move through the figures
+
+        if(isValidValues(line, column, toLine, toColumn)
+                && (isCellNull(chessBoard, toLine, toColumn)
+                || isCellOccupiedByEnemy(chessBoard, toLine, toColumn))){
             return true;
         }
         return false;

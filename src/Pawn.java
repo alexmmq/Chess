@@ -51,8 +51,8 @@ public class Pawn extends ChessPiece{
         //check that the pawn can move only forward, case whites, one cell
         if(super.getColor().toString().equals("WHITE")
                 && line < toLine
-                && isValidValues(line, column, line + 1, column)
-                && isCellNull(chessBoard, line + 1, column)
+                && isValidValues(line, column, toLine, toColumn)
+                && isCellNull(chessBoard, toLine, toColumn)
                 && validMove){
             return true;
 
@@ -60,48 +60,28 @@ public class Pawn extends ChessPiece{
         //check that the pawn can move only forward, case blacks, one cell
         if(super.getColor().toString().equals("BLACK")
                 && line > toLine
-                && isValidValues(line, column, line - 1, column)
-                && isCellNull(chessBoard, line - 1, column)
+                && isValidValues(line, column, toLine, toColumn)
+                && isCellNull(chessBoard, toLine, toColumn)
                 && validMove){
             return true;
         }
 
-        //case eating of the white pawn column +1
+        //case eating of the white pawn column +1, -1
         if(super.getColor().toString().equals("WHITE")
                 && line < toLine
                 && column != toColumn
-                && isValidValues(line, column, line + 1, column + 1)
-                && isCellOccupiedByEnemy(chessBoard, line + 1, column + 1)
+                && isValidValues(line, column, toLine, toColumn)
+                && isCellOccupiedByEnemy(chessBoard, toLine, toColumn)
                 && validMove){
             return true;
         }
 
-        //case eating of the white pawn column -1
-        if(super.getColor().toString().equals("WHITE")
-                && line < toLine
-                && column != toColumn
-                && isValidValues(line, column, line + 1, column - 1)
-                && isCellOccupiedByEnemy(chessBoard, line + 1, column - 1)
-                && validMove){
-            return true;
-        }
-
-        //case eating of the black pawn column +1
+        //case eating of the black pawn column +1, -1
         if(super.getColor().toString().equals("BLACK")
                 && line > toLine
                 && column != toColumn
-                && isValidValues(line, column, line + 1, column)
-                && isCellOccupiedByEnemy(chessBoard, line + 1, column)
-                && validMove){
-            return true;
-        }
-
-        //case eating of the black pawn column -1
-        if(super.getColor().toString().equals("BLACK")
-                && line > toLine
-                && column != toColumn
-                && isValidValues(line, column, line - 1, column)
-                && isCellOccupiedByEnemy(chessBoard, line - 1, column)
+                && isValidValues(line, column, toLine, toColumn)
+                && isCellOccupiedByEnemy(chessBoard, toLine, toColumn)
                 && validMove){
             return true;
         }
