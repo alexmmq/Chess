@@ -141,12 +141,12 @@ public class ChessBoard {
         System.out.println("\t0\t1\t2\t3\t4\t5\t6\t7");
 
         for(int i = 7; i > -1; i--) {
-            System.out.println(i + "\t");
+            System.out.print(i + "\t");
             for(int j = 0; j < 8; j++) {
                 if(board[i][j] == null) {
-                    System.out.println(".." + "\t");
+                    System.out.print(".." + "\t");
                 } else{
-                    System.out.println(board[i][j].getSymbol() + board[i][j].getColor().toString().substring(0,1)
+                    System.out.print(board[i][j].getSymbol() + board[i][j].getColor().toString().substring(0,1)
                             .toLowerCase() + "\t");
                 }
             }

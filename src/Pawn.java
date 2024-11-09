@@ -55,6 +55,8 @@ public class Pawn extends ChessPiece{
         //check that the pawn can move only forward, case whites, one cell
         if(super.getColor().toString().equals("WHITE")
                 && line < toLine
+                && lineDiff == 1
+                && columnDiff == 0
                 && isValidValues(line, column, toLine, toColumn)
                 && isCellNull(chessBoard, toLine, toColumn)
                 && validMove){
@@ -64,6 +66,8 @@ public class Pawn extends ChessPiece{
         //check that the pawn can move only forward, case blacks, one cell
         if(super.getColor().toString().equals("BLACK")
                 && line > toLine
+                && lineDiff == 1
+                && columnDiff == 0
                 && isValidValues(line, column, toLine, toColumn)
                 && isCellNull(chessBoard, toLine, toColumn)
                 && validMove){
@@ -74,6 +78,8 @@ public class Pawn extends ChessPiece{
         if(super.getColor().toString().equals("WHITE")
                 && line < toLine
                 && column != toColumn
+                && lineDiff == 1
+                && columnDiff == 1
                 && isValidValues(line, column, toLine, toColumn)
                 && isCellOccupiedByEnemy(chessBoard, toLine, toColumn)
                 && validMove){
@@ -84,6 +90,8 @@ public class Pawn extends ChessPiece{
         if(super.getColor().toString().equals("BLACK")
                 && line > toLine
                 && column != toColumn
+                && lineDiff == 1
+                && columnDiff == 1
                 && isValidValues(line, column, toLine, toColumn)
                 && isCellOccupiedByEnemy(chessBoard, toLine, toColumn)
                 && validMove){

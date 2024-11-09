@@ -23,7 +23,8 @@ public class Horse extends ChessPiece{
 
         if(isValidValues(line, column, toLine, toColumn)
                 && (isCellNull(chessBoard, toLine, toColumn)
-                || isCellOccupiedByEnemy(chessBoard, toLine, toColumn))){
+                || isCellOccupiedByEnemy(chessBoard, toLine, toColumn))
+                && validMove){
             return true;
         }
         return false;
