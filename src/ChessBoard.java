@@ -12,12 +12,26 @@ public class ChessBoard {
     }
 
     public boolean moveToPosition(int startLine, int startColumn, int endLine, int endColumn){
+        //checks if the starting values are correct
         if(checkPos(startLine) && checkPos(startColumn)){
+            //checks if the chesspiece in the cell equals the color of the player
             if(!nowPlayer.equals(board[startLine][startColumn].getColor().toString())) return false;
+            //main logic of the chess movement
             if(board[startLine][startColumn].canMoveToPosition(this, startLine, startColumn, endLine, endColumn)){
+                //defining if we are dealing with the rooks or kings
+                //case rooks, updating once
+                if(board[startLine][startColumn].getSymbol().equals("R")){
+                    board[startLine][startColumn].check = false;
+                }
+                //case Kings, updating once
+                if(board[startLine][startColumn].getSymbol().equals("K")){
+                    board[startLine][startColumn].check = false;
+                }
+
                 board[endLine][endColumn] = board[startLine][startColumn];
                 board[startLine][startColumn] = null;
-                this.nowPlayer = this.nowPlayerColor().equals("white") ? "black" : "white";
+                this.nowPlayer = this.nowPlayerColor().equals("WHITE") ? "BLACK" : "WHITE";
+
                 return true;
             } else return false;
         } else return false;

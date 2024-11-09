@@ -29,23 +29,27 @@ public class Pawn extends ChessPiece{
         //check for the first move whites - can move to 2 cells in case if we don't have any obstacles
         if(super.getColor().toString().equals("WHITE")
                 && line == 1
+                && toLine == 3
+                && column == toColumn
                 && isValidValues(line, column, line + 1, column)
                 && isCellNull(chessBoard, line + 1, column)
                 && isValidValues(line, column, line + 2, column)
                 && isCellNull(chessBoard, line + 2, column)
                 && validMove){
-            return (toLine == 3) && (column == toColumn);
+            return true;
 
         }
         //check for the first move blacks - can move to 2 cells
         if(super.getColor().toString().equals("BLACK")
                 && line == 6
+                && toLine == 4
+                && column == toColumn
                 && isValidValues(line, column, line - 1, column)
                 && isCellNull(chessBoard, line - 1, column)
                 && isValidValues(line, column, line - 2, column)
                 && isCellNull(chessBoard, line - 2, column)
                 && validMove){
-            return (toLine == 4) && (column == toColumn);
+            return true;
 
         }
         //check that the pawn can move only forward, case whites, one cell
@@ -85,7 +89,6 @@ public class Pawn extends ChessPiece{
                 && validMove){
             return true;
         }
-
 
             return false;
     }
