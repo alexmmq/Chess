@@ -138,10 +138,10 @@ public class ChessBoard {
         System.out.println();
         System.out.println("Player 2(Black)");
         System.out.println();
-        System.out.println("\t0\t1\t2\t3\t4\t5\t6\t7");
+        System.out.println("\tA\tB\tC\tD\tE\tF\tG\tH");
 
         for(int i = 7; i > -1; i--) {
-            System.out.print(i + "\t");
+            System.out.print(i + 1 + "\t");
             for(int j = 0; j < 8; j++) {
                 if(board[i][j] == null) {
                     System.out.print(".." + "\t");
@@ -150,9 +150,10 @@ public class ChessBoard {
                     System.out.print(asciiHelper.printChessPiece() + "\t");
                 }
             }
-            System.out.println();
+            System.out.print(i + 1);
             System.out.println();
         }
+        System.out.println("\tA\tB\tC\tD\tE\tF\tG\tH");
         System.out.println("Player 1(White)");
     }
 

@@ -21,40 +21,25 @@ public class ASCIIHelper {
     public String printChessPiece() {
         String toReturn = "";
         if(chessPiece.getColor().equals(Color.WHITE)){
-            switch (chessPiece.getSymbol()){
-                case ("K"): toReturn = whiteKing;
-                    break;
-                    case ("Q"): toReturn = whiteQueen;
-                        break;
-                        case ("R"): toReturn = whiteRook;
-                            break;
-                            case ("B"): toReturn = whiteBishop;
-                                break;
-                                case ("H"): toReturn = whiteHorse;
-                                    break;
-                                    case ("P"): toReturn =  whitePawn;
-                                        break;
-                default:
-                    toReturn = " ";
-
-            }
+            toReturn = switch (chessPiece.getSymbol()) {
+                case ("K") -> whiteKing;
+                case ("Q") -> whiteQueen;
+                case ("R") -> whiteRook;
+                case ("B") -> whiteBishop;
+                case ("H") -> whiteHorse;
+                case ("P") -> whitePawn;
+                default -> " ";
+            };
         } else{
-            switch (chessPiece.getSymbol()){
-                case ("K"):  toReturn = blackKing;
-                break;
-                case ("Q"):  toReturn = blackQueen;
-                break;
-                case ("R"):  toReturn = blackRook;
-                break;
-                case ("B"):  toReturn = blackBishop;
-                break;
-                case ("H"): toReturn = blackHorse;
-                break;
-                case ("P"): toReturn = blackPawn;
-                break;
-                default:
-                    toReturn = " ";
-            }
+            toReturn = switch (chessPiece.getSymbol()) {
+                case ("K") -> blackKing;
+                case ("Q") -> blackQueen;
+                case ("R") -> blackRook;
+                case ("B") -> blackBishop;
+                case ("H") -> blackHorse;
+                case ("P") -> blackPawn;
+                default -> " ";
+            };
         }
         return toReturn;
     }

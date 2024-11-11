@@ -21,68 +21,63 @@ public class Bishop extends ChessPiece{
 
         ///checking if there are some chess pieces on the way, checking all the way from line to toLine and column to
         //toColumn
-        //case lineDiff negative columnDiff negative
-        if(validMoves
-            && (lineDiff < 0)
-            && (columnDiff < 0)){
-            int l = line;
-            int c = column;
-            while(l!= toLine+1){
-                l = l - 1;
-                c = c - 1;
-                if(isValidValues(line, column, l, c)
-                    && !isCellNull(chessBoard, l, c)){
-                    return false;
+        if(validMoves && (lineDiff < 0)){
+            //case lineDiff negative columnDiff negative
+            if(columnDiff < 0){
+                int l = line;
+                int c = column;
+                while(l!= toLine+1){
+                    l = l - 1;
+                    c = c - 1;
+                    if(isValidValues(line, column, l, c)
+                            && !isCellNull(chessBoard, l, c)){
+                        return false;
+                    }
+                }
+
+                //case lineDiff negative columnDiff positive
+            }
+            if(columnDiff > 0){
+                int l = line;
+                int c = column;
+                while(l!= toLine+1){
+                    l = l - 1;
+                    c = c + 1;
+                    if(isValidValues(line, column, l, c)
+                            && !isCellNull(chessBoard, l, c)){
+                        return false;
+                    }
                 }
             }
-
-            //case lineDiff negative columnDiff positive
         }
         if(validMoves
-        && (lineDiff < 0)
-        && (columnDiff > 0)){
-            int l = line;
-            int c = column;
-            while(l!= toLine+1){
-                l = l - 1;
-                c = c + 1;
-                if(isValidValues(line, column, l, c)
-                && !isCellNull(chessBoard, l, c)){
-                    return false;
-                }
-            }
-
+                &&(lineDiff >0)){
             //case lineDiff positive columnDiff negative
-        }
-        if(validMoves
-                && (lineDiff > 0)
-                && (columnDiff < 0)){
-            int l = line;
-            int c = column;
-            while(l!= toLine - 1) {
-                l = l + 1;
-                c = c - 1;
-                if(isValidValues(line, column, l, c)
-                &&!isCellNull(chessBoard, l, c)){
-                    return false;
+            if(columnDiff < 0){
+                int l = line;
+                int c = column;
+                while(l!= toLine - 1) {
+                    l = l + 1;
+                    c = c - 1;
+                    if(isValidValues(line, column, l, c)
+                            &&!isCellNull(chessBoard, l, c)){
+                        return false;
+                    }
                 }
+                //case lineDiff positive columnDiff positive
             }
-
-            //case lineDiff positive columnDiff positive
-        }
-        if(validMoves
-                && (lineDiff > 0)
-                && (columnDiff > 0)){
-            int l = line;
-            int c = column;
-            while(l!= toLine - 1){
-                l = l + 1;
-                c = c + 1;
-                if(isValidValues(line, column, l, c)
-                && !isCellNull(chessBoard, l, c)){
-                    return false;
+            if(columnDiff > 0){
+                int l = line;
+                int c = column;
+                while(l!= toLine - 1){
+                    l = l + 1;
+                    c = c + 1;
+                    if(isValidValues(line, column, l, c)
+                            && !isCellNull(chessBoard, l, c)){
+                        return false;
+                    }
                 }
-            }
+        }
         }
 
         //checking the positive outcome - eating or moving to empty cell

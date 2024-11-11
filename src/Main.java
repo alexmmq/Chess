@@ -43,9 +43,7 @@ public class Main {
                'exit' - для выхода
                'replay' - для перезапуска игры
                'castling0' или 'castling7' - для рокировки по соответствующей линии
-               'move 1 1 2 3' - для передвижения фигуры с позиции 1 1 на 2 3(поле это двумерный массив от 0 до 7)
-               Проверьте могут ли фигуры ходить друг сквозь друга, корректно ли съедают друг друга, 
-               можно ли поставить шах и сделать рокировку?""");
+               'move e 2 e 4' - для передвижения фигуры""");
 
         System.out.println();
         board.printBoard();
@@ -74,10 +72,10 @@ public class Main {
                 } else if(s.contains("move")){
                     String[] a = s.split(" ");
                     try{
-                        int line = Integer.parseInt(a[1]);
-                        int column = Integer.parseInt(a[2]);
-                        int toLine = Integer.parseInt(a[3]);
-                        int toColumn = Integer.parseInt(a[4]);
+                        int line = lineTransform(a[2]);
+                        int column = columnTransform(a[1]);
+                        int toLine = lineTransform(a[4]);
+                        int toColumn = columnTransform(a[3]);
                         if(board.moveToPosition(line, column, toLine, toColumn)){
                             System.out.println("Успешно передвинулись");
                             board.printBoard();
@@ -88,5 +86,24 @@ public class Main {
                 }
             }
         }
+    }
+    public static Integer columnTransform(String s){
+        char c = s.charAt(0);
+        return switch (c) {
+            case 'a' -> 0;
+            case 'b' -> 1;
+            case 'c' -> 2;
+            case 'd' -> 3;
+            case 'e' -> 4;
+            case 'f' -> 5;
+            case 'g' -> 6;
+            case 'h' -> 7;
+            default -> -1;
+        };
+    }
+
+    public static Integer lineTransform(String s){
+        int i = Integer.parseInt(s);
+        return i - 1;
     }
 }
