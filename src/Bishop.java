@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Bishop extends ChessPiece{
     public Bishop(Color color) {
@@ -28,10 +27,11 @@ public class Bishop extends ChessPiece{
             && (columnDiff < 0)){
             int l = line;
             int c = column;
-            while((l!= toLine) && (c!= toColumn)){
+            while(l!= toLine+1){
                 l = l - 1;
                 c = c - 1;
-                if(!chessBoard.board[l][c].isCellNull(chessBoard, l, c)){
+                if(isValidValues(line, column, l, c)
+                    && !isCellNull(chessBoard, l, c)){
                     return false;
                 }
             }
@@ -43,10 +43,11 @@ public class Bishop extends ChessPiece{
         && (columnDiff > 0)){
             int l = line;
             int c = column;
-            while((l!= toLine) && (c!= toColumn)){
+            while(l!= toLine+1){
                 l = l - 1;
                 c = c + 1;
-                if(!chessBoard.board[l][c].isCellNull(chessBoard, l, c)){
+                if(isValidValues(line, column, l, c)
+                && !isCellNull(chessBoard, l, c)){
                     return false;
                 }
             }
@@ -58,10 +59,11 @@ public class Bishop extends ChessPiece{
                 && (columnDiff < 0)){
             int l = line;
             int c = column;
-            while((l!= toLine) && (c!= toColumn)){
+            while(l!= toLine - 1) {
                 l = l + 1;
                 c = c - 1;
-                if(!chessBoard.board[l][c].isCellNull(chessBoard, l, c)){
+                if(isValidValues(line, column, l, c)
+                &&!isCellNull(chessBoard, l, c)){
                     return false;
                 }
             }
@@ -73,23 +75,20 @@ public class Bishop extends ChessPiece{
                 && (columnDiff > 0)){
             int l = line;
             int c = column;
-            while((l!= toLine) && (c!= toColumn)){
+            while(l!= toLine - 1){
                 l = l + 1;
                 c = c + 1;
-                if(!chessBoard.board[l][c].isCellNull(chessBoard, l, c)){
+                if(isValidValues(line, column, l, c)
+                && !isCellNull(chessBoard, l, c)){
                     return false;
                 }
             }
         }
 
         //checking the positive outcome - eating or moving to empty cell
-        if(validMoves
-            && (isCellNull(chessBoard, toLine, toColumn)
-            || isCellOccupiedByEnemy(chessBoard, toLine, toColumn))){
-            return true;
-        }
-
-        return false;
+        return validMoves
+                && (isCellNull(chessBoard, toLine, toColumn)
+                || isCellOccupiedByEnemy(chessBoard, toLine, toColumn));
     }
 
     @Override

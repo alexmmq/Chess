@@ -146,8 +146,8 @@ public class ChessBoard {
                 if(board[i][j] == null) {
                     System.out.print(".." + "\t");
                 } else{
-                    System.out.print(board[i][j].getSymbol() + board[i][j].getColor().toString().substring(0,1)
-                            .toLowerCase() + "\t");
+                    ASCIIHelper asciiHelper = new ASCIIHelper(board[i][j]);
+                    System.out.print(asciiHelper.printChessPiece() + "\t");
                 }
             }
             System.out.println();
