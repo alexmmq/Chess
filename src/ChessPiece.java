@@ -36,17 +36,6 @@ public abstract class ChessPiece {
 
     public abstract boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn);
 
-    public ArrayList<Boolean> truncateArray(ArrayList<Boolean> array) {
-        //getting rid of extra false values - we need to know only where chess piece can go
-        ArrayList<Boolean> returnArray = new ArrayList<>();
-        for(Boolean b : array) {
-            if(b == false){
-                break;
-            }
-            else returnArray.add(b);
-        }
-        return returnArray;
-    }
 
     public abstract String getSymbol();
 

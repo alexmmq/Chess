@@ -47,9 +47,9 @@ public class ChessBoard {
                     && board[0][1] == null
                     && board[0][2] == null
                     && board[0][3] == null){
-                if(board[0][0].getColor().toString().equals("WHITE")
+                if(board[0][0].getColor().equals(Color.WHITE)
                         && board[0][4].
-                        getColor().toString().equals("WHITE")
+                        getColor().equals(Color.WHITE)
                         && board[0][0].check
                         && board[0][4].check
                         && !new King(Color.WHITE).isUnderAttack(this, 0 , 2)){
@@ -70,7 +70,7 @@ public class ChessBoard {
                 && board[7][1] == null
                 && board[7][2] == null
                 && board[7][3] == null){
-                if(board[7][0].getColor().toString().equals("BLACK")
+                if(board[7][0].getColor().equals(Color.BLACK)
                     && board[7][0].check
                     && board[7][4].check
                     && !new King(Color.BLACK).isUnderAttack(this, 7, 2)){
@@ -95,7 +95,7 @@ public class ChessBoard {
                     && board[0][4].getSymbol().equals("K")
                     && board[0][5] == null
                     && board[0][6] == null){
-                if(board[0][7].getColor().toString().equals("WHITE")
+                if(board[0][7].getColor().equals(Color.WHITE)
                         && board[0][4].getColor().toString().equals("WHITE")
                         && board[0][7].check
                         && board[0][4].check
@@ -116,7 +116,7 @@ public class ChessBoard {
                     && board[7][4].getSymbol().equals("K")
                     && board[7][5] == null
                     && board[7][6] == null){
-                if(board[7][7].getColor().toString().equals("BLACK")
+                if(board[7][7].getColor().equals(Color.BLACK)
                         && board[7][7].check
                         && board[7][4].check
                         && !new King(Color.BLACK).isUnderAttack(this, 7, 6)){

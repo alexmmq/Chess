@@ -24,28 +24,28 @@ public class King extends ChessPiece{
 //         - null;
 //         - contains an enemy chesspiece;
 //         - is not under attack;
-        if(validMove
+        return validMove
                 && (isCellNull(chessBoard, toLine, toColumn)
                 || isCellOccupiedByEnemy(chessBoard, toLine, toColumn))
-                && !isUnderAttack(chessBoard, toLine, toColumn))
-            return true;
-        return false;
+                && !isUnderAttack(chessBoard, toLine, toColumn);
     }
 
     public boolean isUnderAttack(ChessBoard chessBoard, int line, int column) {
         //parses all the chessboard for enemy pieces that can go to the certain cell
         for(int i = 0; i <= 7; i++){
             for(int j = 0; j <= 7; j++){
-                if (!chessBoard.board[i][j].getColor().equals(this.getColor())) {
-                    //check for all other chess pieces
-                    if(!chessBoard.board[i][j].getSymbol().equals("P")
-                        && chessBoard.board[i][j].canMoveToPosition(chessBoard, i, j, line, column)){
-                        return true;
-                        //check if it is the pawn, has exception in eating way
-                    } else if(chessBoard.board[i][j].getSymbol().equals("P")
-                        && chessBoard.board[i][j].canMoveToPosition(chessBoard, i, j, line, column)
-                        && Math.abs(column - j) == 1){
-                        return true;
+                if(!isCellNull(chessBoard, i, j)){
+                    if (!chessBoard.board[i][j].getColor().equals(this.getColor())) {
+                        //check for all other chess pieces
+                        if(!chessBoard.board[i][j].getSymbol().equals("P")
+                                && chessBoard.board[i][j].canMoveToPosition(chessBoard, i, j, line, column)){
+                            return true;
+                            //check if it is the pawn, has exception in eating way
+                        } else if(chessBoard.board[i][j].getSymbol().equals("P")
+                                && chessBoard.board[i][j].canMoveToPosition(chessBoard, i, j, line, column)
+                                && Math.abs(column - j) == 1){
+                            return true;
+                        }
                     }
                 }
             }
